@@ -14,9 +14,6 @@ def push(stack, num):
     stack.append(num)
 
 
-
-
-
 stack.append(5)
 stack.append(10)
 stack.append(15)
