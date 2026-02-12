@@ -59,7 +59,7 @@ def visualize(matrix, path):
                 print(cell, end=" ")
         print()
         
-
+    
 rows = int(input("Enter number of rows = "))
 cols = int(input("Enter number of columns = "))
 matrix = [[0 for i in range(cols)] for j in range(rows)]
