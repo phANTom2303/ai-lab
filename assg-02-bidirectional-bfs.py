@@ -1,4 +1,51 @@
 from queue import Queue
+import networkx as nx
+import matplotlib.pyplot as plt
+
+def visualize_graph(adjList, visited, path):
+    G = nx.Graph()
+    
+    # Add nodes and edges from adjList (index-1 to match user's 1-based indexing if needed, 
+    # but based on code, adjList is size nodes+1, using indices 1..nodes)
+    for i in range(1, len(adjList)):
+        G.add_node(i)
+        for neighbor in adjList[i]:
+            G.add_edge(i, neighbor)
+    
+    pos = nx.spring_layout(G)
+    plt.figure(figsize=(10, 8))
+    
+    # Draw all nodes first (default color)
+    valid_nodes = range(1, len(adjList))
+    nx.draw_networkx_nodes(G, pos, nodelist=valid_nodes, node_color='lightgray', node_size=500)
+    
+    # Separate nodes by category
+    forward_visited = [i for i in range(1, len(visited)) if visited[i] == 1 and i not in path]
+    backward_visited = [i for i in range(1, len(visited)) if visited[i] == -1 and i not in path]
+    path_nodes = path
+    
+    # Draw forward visited nodes (e.g., green)
+    nx.draw_networkx_nodes(G, pos, nodelist=forward_visited, node_color='lightgreen', label='Forward Search', node_size=500)
+    
+    # Draw backward visited nodes (e.g., orange)
+    nx.draw_networkx_nodes(G, pos, nodelist=backward_visited, node_color='orange', label='Backward Search', node_size=500)
+    
+    # Draw path nodes (e.g., red)
+    nx.draw_networkx_nodes(G, pos, nodelist=path_nodes, node_color='red', label='Final Path', node_size=600)
+    
+    # Draw edges
+    nx.draw_networkx_edges(G, pos, edge_color='gray')
+    
+    # Draw path edges specifically
+    path_edges = list(zip(path, path[1:]))
+    nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color='red', width=2)
+    
+    # Labels
+    nx.draw_networkx_labels(G, pos)
+    
+    plt.title("Bidirectional BFS Visualization")
+    plt.legend(scatterpoints=1)
+    plt.show()
 
 def expandLevel(nodeQueue, adjList, ancestor, visited, visitedFlag):
     oppositeFlag = visitedFlag * (-1)
@@ -64,6 +111,7 @@ def biderectionalBFS(nodes ,adjList, source, destination):
     finalpath = srcpath + destpath    
     print("Result : ")
     print(finalpath)
+    visualize_graph(adjList, visited, finalpath)
     
 
 
