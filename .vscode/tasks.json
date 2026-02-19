@@ -4,7 +4,7 @@
         {
             "label": "Run Python with File IO",
             "type": "shell",
-            "command": "cd \"${workspaceFolder}\" && python3 ${file} < \"${workspaceFolder}/input.txt\" > \"${workspaceFolder}/output.txt\"",
+            "command": "cd \"${workspaceFolder}\" && \"${workspaceFolder}/venv-matplot-networkx/bin/python\" ${file} < \"${workspaceFolder}/input.txt\" > \"${workspaceFolder}/output.txt\"",
             "group": {
                 "kind": "build",
                 "isDefault": true
