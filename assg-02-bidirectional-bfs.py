@@ -2,7 +2,7 @@ from queue import Queue
 import networkx as nx
 import matplotlib.pyplot as plt
 
-def visualize_graph(adjList, visited, path):
+def visualize_graph(adjList, visited, path, title):
     G = nx.Graph()
     
     # Add nodes and edges from adjList (index-1 to match user's 1-based indexing if needed, 
@@ -43,7 +43,7 @@ def visualize_graph(adjList, visited, path):
     # Labels
     nx.draw_networkx_labels(G, pos)
     
-    plt.title("Bidirectional BFS Visualization")
+    plt.title(title)
     plt.legend(scatterpoints=1)
     plt.show()
 
@@ -111,10 +111,35 @@ def biderectionalBFS(nodes ,adjList, source, destination):
     finalpath = srcpath + destpath    
     print("Result : ")
     print(finalpath)
-    visualize_graph(adjList, visited, finalpath)
+    visualize_graph(adjList, visited, finalpath, "Bidirectional BFS")
     
 
-
+def unidirectionalBFS(adjList, nodes, source, destination):
+    q = Queue()
+    q.put(source)
+    visited = [0 for i in range(nodes + 1)]
+    visited[source] = 1
+    ancestor = [0 for i in range(nodes + 1)]
+    ancestor[source] = source
+    found = False
+    while(q.qsize() > 0):
+        node = q.get()
+        for padosi in adjList[node]:
+            if(visited[padosi] == 0):
+                visited[padosi] = 1
+                ancestor[padosi] = node
+                q.put(padosi)
+                if(padosi == destination):
+                    found = True
+                    break
+        if(found):
+            break
+                    
+    path = backtrackAndBuildPath(ancestor, destination, source)
+    path.reverse()
+    print(path)
+    visualize_graph(adjList, visited, path, "Uniderectional BFS")
+            
 def main():
     nodes = int(input("\nEnter number of cities(nodes) : "))
     edges = int(input("\nEnter number of roads(edges) : "))
@@ -139,7 +164,7 @@ def main():
     destination = int(input("Enter Destination City : "))
     
     biderectionalBFS(nodes, adjList, source, destination)
-    
+    unidirectionalBFS(adjList, nodes, source, destination)    
 
 main()
 
