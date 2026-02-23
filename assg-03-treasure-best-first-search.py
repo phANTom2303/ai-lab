@@ -130,9 +130,9 @@ def main():
     parent[source[0]][source[1]] = source
     bestFirstSearch(matrix, source, treasure, visited, parent)
     finalPathCells = getPath(source, treasure, parent)
-    renderedMatrix = [['' for i in range(cols)] for j in range(rows)]
     
     #do visualization : 
+    renderedMatrix = [['' for i in range(cols)] for j in range(rows)]
     for i in range(rows):
         for j in range(cols):
             if(matrix[i][j] == 1):
