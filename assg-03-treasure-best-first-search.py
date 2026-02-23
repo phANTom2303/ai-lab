@@ -198,3 +198,20 @@ Test Case 2 (Large Maze):
 0 0
 14 14
 """
+
+"""
+Time Complexity Analysis:
+The Best First Search algorithm uses a Priority Queue to explore cells based on their heuristic value (Manhattan distance).
+- In the worst case, we might visit every cell in the grid once.
+- Let V be the number of empty cells (vertices) and E be the number of possible moves (edges). In a grid, E ≈ 4V.
+- Each cell is pushed into the Priority Queue at most once.
+- Priority Queue operations (insertion and extraction) take O(log V) time.
+- Therefore, the worst-case Time Complexity is O(V log V) or O(R*C log(R*C)) where R is rows and C is columns.
+- However, with a good heuristic, it often performs much better than BFS, though it is not guaranteed to find the shortest path.
+
+Space Complexity Analysis:
+- We store the 'visited' array of size R*C.
+- We store the 'parent' array of size R*C used for path reconstruction.
+- The Priority Queue can store up to O(V) cells in the worst case (e.g., if many cells are added before being processed).
+- Therefore, the Space Complexity is O(V) or O(R*C).
+"""
